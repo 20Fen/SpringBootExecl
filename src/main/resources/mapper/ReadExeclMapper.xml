@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.word.demo.dao.mapper.ReadExeclMapper">
+    <!--批量增加-->
+    <insert id="insertByBatch">
+        insert into words (
+        id,pkid,name,year,sex)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.pkid,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            str_to_date(#{item.year,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+            #{item.sex,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <!-- 批量更新设备数据 -->
+    <update id="updateByBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update words set
+            name = #{item.name,jdbcType=VARCHAR},
+            year = str_to_date(#{item.year,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s'),
+            sex = #{item.sex,jdbcType=VARCHAR}
+            where pkid = #{item.pkid,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    <!-- 批量删除设备数据 -->
+    <delete id="deleteByBatch" parameterType="java.util.List">
+        delete from words
+        where pkid in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.pkid,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+    <!--创建表-->
+    <update id="createTable" parameterType="String">
+        CREATE TABLE ${tableName}
+        (
+            id VARCHAR(50) NOT NULL,
+            pkid VARCHAR(50) NOT NULL,
+            name VARCHAR(36),
+            year DATETIME,
+            sex  VARCHAR(36),
+             PRIMARY KEY (id)
+        )
+    </update>
+    <!--查询表是否存在-->
+    <select id="existTable" resultType="java.lang.Integer" parameterType="String">
+        select count(1) from information_schema.TABLES where table_name = #{tableName}
+    </select>
+    <!--查新所有人的Pkid-->
+    <select id="getAllPkid" resultType="java.lang.String">
+        select pkid from words
+    </select>
+
+</mapper>
