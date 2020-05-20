@@ -22,7 +22,7 @@ public class ReadExeclController {
     @ApiOperation(value = "word导入")
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String upLoadFile(@RequestParam("file") MultipartFile file) throws Exception {
-        int result = service.wordImport(file);
+        int result = service.excelImport(file);
         if(0 == result){
             return ("导入失败");
         }

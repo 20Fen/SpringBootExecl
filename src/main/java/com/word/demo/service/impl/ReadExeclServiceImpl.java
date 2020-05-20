@@ -46,7 +46,7 @@ public class ReadExeclServiceImpl implements ReadExeclService {
  * @date 2019/10/17 19:00
  */
     @Override
-    public Integer wordImport(MultipartFile file) throws Exception {
+    public Integer excelImport(MultipartFile file) throws Exception {
 //        查询表是否存在
         int tableExist = mapper.existTable(EQUIPMENT_TABLE_NAME);
         if (tableExist < 1) {

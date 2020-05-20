@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ReadExeclService {
 
-    Integer wordImport(MultipartFile file) throws Exception;
+    Integer excelImport(MultipartFile file) throws Exception;
 }
