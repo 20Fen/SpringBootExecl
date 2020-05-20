@@ -1,6 +1,9 @@
 package com.word.demo.service.impl;
 
 import com.alibaba.fastjson.JSON;
+//import com.alibaba.excel.ExcelWriter;
+//import com.alibaba.excel.metadata.Sheet;
+//import com.alibaba.excel.support.ExcelTypeEnum;
 import com.word.demo.dao.mapper.ReadExeclMapper;
 import com.word.demo.model.Users;
 import com.word.demo.service.ReadExeclService;
@@ -12,8 +15,12 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.*;
 
 import lombok.extern.log4j.Log4j2;
@@ -157,6 +164,47 @@ public class ReadExeclServiceImpl implements ReadExeclService {
             int deleteNum = mapper.deleteByBatch(equipmentDeleteList);
         }
         return importCount;
+    }
+
+    @Override
+    public void excelExport(HttpServletResponse response) {
+//
+//        List list=new ArrayList();
+//        先查询吧查询出来的数据组装到一个新list里面
+//        List<String> allPkid = mapper.getAllPkid();
+//        list.add(allPkid);
+//
+////        开始创建Excel
+//        ServletOutputStream outputStream = null;
+//        try {
+//            String fileName = URLEncoder.encode("excel表名", "UTF-8");
+////            response.setContentType("application/vnd.ms-excel");
+//            response.setContentType("application/vnd.ms-excel");
+//            response.setCharacterEncoding("utf-8");
+//            response.setHeader("Content-Disposition", "attachment;filename="+fileName+".xlsx");
+//            outputStream = response.getOutputStream();
+//
+//            ExcelWriter excelWriter = new ExcelWriter(new BufferedOutputStream(outputStream), ExcelTypeEnum.XLSX, true);
+//            Sheet sheet = new Sheet(1, 1, DistributionExcelVo.class);
+//            sheet.setSheetName("分销数据");
+//            sheet.setAutoWidth(true);
+//
+//            excelWriter.write(list, sheet);
+//            excelWriter.finish();
+//            outputStream.flush();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if(outputStream != null) {
+//                try {
+//                    outputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
     }
 
     // 判断文件
